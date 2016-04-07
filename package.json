@@ -1,0 +1,8 @@
+{
+  "name": "csp-reporter",
+  "description": "Server to save content security policies reports",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+  }
+}
