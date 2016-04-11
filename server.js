@@ -27,11 +27,11 @@ var server = http.createServer(function (request, response) {
 
           var document_uri       = connection.escape (csp_report['document-uri']),
               referrer           = connection.escape (csp_report['referrer']),
-              voilated_directive = connection.escape (csp_report['voilated-directive']) === "NULL" ? "''" : connection.escape (csp_report['voilated-directive']),
+              violated_directive = connection.escape (csp_report['violated-directive']) === "NULL" ? "''" : connection.escape (csp_report['violated-directive']),
               original_policy    = connection.escape (csp_report['original-policy']),
               blocked_uri        = connection.escape (csp_report['blocked-uri']),
               date               = "CURRENT_TIMESTAMP",
-              sql                = "INSERT INTO `csp` (`document_uri`, `referrer`, `violated-directive`, `original-policy`, `blocked-uri`, `date`) VALUES (" + document_uri + ", " + referrer + ", " + voilated_directive + ", " + original_policy + ", " + blocked_uri + ", " + date + ");"
+              sql                = "INSERT INTO `csp` (`document_uri`, `referrer`, `violated-directive`, `original-policy`, `blocked-uri`, `date`) VALUES (" + document_uri + ", " + referrer + ", " + violated_directive + ", " + original_policy + ", " + blocked_uri + ", " + date + ");"
 
           connection.query (sql, function (error, rows, fields) {
             if (error)
