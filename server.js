@@ -25,13 +25,13 @@ var server = http.createServer(function (request, response) {
             database : CONFIG.DATABASE_DATABASE_NAME
           });
 
-          var document_uri       = connection.escape (csp_report['document-uri']),
-              referrer           = connection.escape (csp_report['referrer']),
-              voilated_directive = connection.escape (csp_report['voilated-directive']) === "NULL" ? "''" : connection.escape (csp_report['voilated-directive']),
-              original_policy    = connection.escape (csp_report['original-policy']),
-              blocked_uri        = connection.escape (csp_report['blocked-uri']),
+          var document_uri       = escape_not_null (csp_report['document-uri'], connection),
+              referrer           = escape_not_null (csp_report['referrer'], connection),
+              violated_directive = escape_not_null (csp_report['violated-directive'], connection),
+              original_policy    = escape_not_null (csp_report['original-policy'], connection),
+              blocked_uri        = escape_not_null (csp_report['blocked-uri'], connection),
               date               = "CURRENT_TIMESTAMP",
-              sql                = "INSERT INTO `csp` (`document_uri`, `referrer`, `violated-directive`, `original-policy`, `blocked-uri`, `date`) VALUES (" + document_uri + ", " + referrer + ", " + voilated_directive + ", " + original_policy + ", " + blocked_uri + ", " + date + ");"
+              sql                = "INSERT INTO `csp` (`document_uri`, `referrer`, `violated-directive`, `original-policy`, `blocked-uri`, `date`) VALUES (" + document_uri + ", " + referrer + ", " + violated_directive + ", " + original_policy + ", " + blocked_uri + ", " + date + ");"
 
           connection.query (sql, function (error, rows, fields) {
             if (error)
@@ -51,3 +51,8 @@ var server = http.createServer(function (request, response) {
 server.listen (PORT, '0.0.0.0', function () {
     console.log("Server listening on: http://localhost:%s", PORT)
 });
+
+function escape_not_null (unsanitized, connection) {
+  var sanitized = connection.escape (unsanitized)
+  return sanitized === "NULL" ? "''" : sanitized
+}
