@@ -4,7 +4,8 @@
  * WARNING *
  ***********
 
- Do not run this in a production environment.  This version contains purposeful security vulnerabilities for demonstration purposes.
+ Do not run this in a production environment.  This version contains
+ purposeful security vulnerabilities for demonstration purposes.
 
  Note: Server is locked down to localhost by default
 ```
