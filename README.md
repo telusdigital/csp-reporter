@@ -1,4 +1,14 @@
-# csp-reporter
+# csp-reporter-insecure
+```
+ ***********
+ * WARNING *
+ ***********
+
+ Do not run this in a production environment.  This version contains purposeful security vulnerabilities for demonstration purposes.
+
+ Note: Server is locked down to localhost by default
+```
+
 Server to save content security policies reports
 
 [![Licence](https://img.shields.io/badge/Licence-ISC-blue.svg)](https://opensource.org/licenses/ISC)
