@@ -1,3 +1,15 @@
+/*
+ ***********
+ * WARNING *
+ ***********
+
+ Do not run this in a production environment.  This version contains purposeful
+ security vulnerabilities for demonstration purposes.
+
+ Note: Server is locked down to localhost by default
+
+ */
+
 var CONFIG = require("./config"),
     http   = require('http'),
     mysql  = require('mysql'),
@@ -26,11 +38,15 @@ var server = http.createServer(function (request, response) {
               database : CONFIG.DATABASE_DATABASE_NAME
             });
 
-            var document_uri       = escape_not_null (csp_report['document-uri'], connection),
-                referrer           = escape_not_null (csp_report['referrer'], connection),
-                violated_directive = escape_not_null (csp_report['violated-directive'], connection),
-                original_policy    = escape_not_null (csp_report['original-policy'], connection),
-                blocked_uri        = escape_not_null (csp_report['blocked-uri'], connection),
+            // Variables not escaped
+            // this allows for sql injection
+            // this is for demonstration purpouses only
+            // DO NOT RUN THIS IN AT ALL UNLESS YOU KNOW WHAT YOUR DOING
+            var document_uri       = csp_report['document-uri'],
+                referrer           = csp_report['referrer'],
+                violated_directive = csp_report['violated-directive'],
+                original_policy    = csp_report['original-policy'],
+                blocked_uri        = csp_report['blocked-uri'],
                 date               = "CURRENT_TIMESTAMP",
                 sql                = "INSERT INTO `csp` (`document_uri`, `referrer`, `violated-directive`, `original-policy`, `blocked-uri`, `date`) VALUES (" + document_uri + ", " + referrer + ", " + violated_directive + ", " + original_policy + ", " + blocked_uri + ", " + date + ");"
 
@@ -52,11 +68,6 @@ var server = http.createServer(function (request, response) {
     }
 });
 
-server.listen (PORT, '0.0.0.0', function () {
+server.listen (PORT, '127.0.0.1', function () {
     console.log("Server listening on: http://localhost:%s", PORT)
 });
-
-function escape_not_null (unsanitized, connection) {
-  var sanitized = connection.escape (unsanitized)
-  return sanitized === "NULL" ? "''" : sanitized
-}
