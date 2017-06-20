@@ -1,4 +1,6 @@
 # csp-reporter
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/telusdigital/csp-reporter.svg)](https://greenkeeper.io/)
 Server to save content security policies reports
 
 [![Licence](https://img.shields.io/badge/Licence-ISC-blue.svg)](https://opensource.org/licenses/ISC)
